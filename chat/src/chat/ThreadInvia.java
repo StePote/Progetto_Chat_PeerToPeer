@@ -14,22 +14,28 @@ import java.net.InetAddress;
  * @author potenza_stefano
  */
 public class ThreadInvia extends Thread {
-    Condivisa c;
+
+    
     InetAddress indirizzo;
-    String contenuto="";
-    
+    String contenuto = "";
+
     public ThreadInvia(Condivisa c) {
-        this.c = c;
-        this.contenuto=c.getMessaggioDaInviare();
-        this.indirizzo=c.getIndirizzo();
+        
+        this.contenuto = c.getMessaggioDaInviare();
+        this.indirizzo = c.getIndirizzo();
     }
-    
+
     @Override
     public void run() {
-        
+        byte[] responseBuffer = contenuto.getBytes();
+
+//        DatagramPacket responsePacket = new DatagramPacket(responseBuffer, responseBuffer.length);
+//
+//        responsePacket.setAddress(packet.getAddress());
+//
+//        responsePacket.setPort(packet.getPort());
+//
+//        server.send(responsePacket);
     }
-    
-    
-    
-    
+
 }

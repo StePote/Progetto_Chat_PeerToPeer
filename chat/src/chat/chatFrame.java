@@ -122,14 +122,20 @@ public class chatFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-Condivisa c;
+    Condivisa c;
+    public chatFrame(Condivisa c) {
+        this.c = c;
+    }
     private void btnRichiestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRichiestaActionPerformed
+
+        //Thread invia
         try {
-            c.setIndirizzo(InetAddress.getByName(textUtente.toString()));
+            c.setIndirizzoDestinatario(InetAddress.getByName(textUtente.toString()));
         } catch (UnknownHostException ex) {
             Logger.getLogger(chatFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        c.getMessaggioDaInviare();
+        c.setMessaggioDaInviare(textScrivi.toString());
+
     }//GEN-LAST:event_btnRichiestaActionPerformed
 
     /**
@@ -149,7 +155,7 @@ Condivisa c;
 
     }
 
-    public static void main(String args[]) {
+    public static void main(String args[]){
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

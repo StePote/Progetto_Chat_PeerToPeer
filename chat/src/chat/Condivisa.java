@@ -13,13 +13,30 @@ import java.net.InetAddress;
  */
 public class Condivisa {
     String messaggioInviato;
-    InetAddress indirizzo;
+    InetAddress indirizzoMittente;
+    InetAddress indirizzoDestinatario;
+
+    public InetAddress getIndirizzoDestinatario() {
+        return indirizzoDestinatario;
+    }
+
+    public void setIndirizzoDestinatario(InetAddress indirizzoDestinatario) {
+        this.indirizzoDestinatario = indirizzoDestinatario;
+    }
     int port;
     String messaggioDaInviare;
     public Condivisa() {
         messaggioInviato="";
         port=0;
         messaggioDaInviare="";
+    }
+
+    public String getMessaggioDaInviare() {
+        return messaggioDaInviare;
+    }
+
+    public void setMessaggioDaInviare(String messaggioDaInviare) {
+        this.messaggioDaInviare = messaggioDaInviare;
     }
 
     public void setMessaggioInviato(String messaggioInviato) {
@@ -31,12 +48,12 @@ public class Condivisa {
         return messaggioInviato;
     }
 
-    public void setIndirizzo(InetAddress indirizzo) {
-        this.indirizzo = indirizzo;
+    public void setIndirizzoMittente(InetAddress indirizzo) {
+        this.indirizzoMittente = indirizzo;
     }
     
     public InetAddress getIndirizzo() {
-        return indirizzo;
+        return indirizzoMittente;
     }
 
     public void setPort(int port) {

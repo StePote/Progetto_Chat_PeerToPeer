@@ -24,6 +24,7 @@ public class Chat {
     public static void main(String[] args) throws SocketException {
         DatagramSocket server = new DatagramSocket(12345);
         Condivisa c = new Condivisa();
+        chatFrame ch= new chatFrame(c);
         int i = 0;
         ThreadAscolta tA = new ThreadAscolta(server, i, c);
         

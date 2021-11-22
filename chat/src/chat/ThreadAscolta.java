@@ -61,7 +61,7 @@ public class ThreadAscolta extends Thread {
                 String nomeUtente=split[1];
                 System.out.println(nomeUtente);
                 c.setMessaggioInviato(messaggioRicevuto);
-                c.setIndirizzo(packet.getAddress());
+                c.setIndirizzoMittente(packet.getAddress());
                 c.setPort(packet.getPort());
             }
         } catch (IOException ex) {
