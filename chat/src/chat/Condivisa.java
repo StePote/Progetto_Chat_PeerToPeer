@@ -15,9 +15,11 @@ public class Condivisa {
     String messaggioInviato;
     InetAddress indirizzo;
     int port;
+    String messaggioDaInviare;
     public Condivisa() {
         messaggioInviato="";
         port=0;
+        messaggioDaInviare="";
     }
 
     public void setMessaggioInviato(String messaggioInviato) {

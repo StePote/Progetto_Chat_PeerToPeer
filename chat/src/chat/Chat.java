@@ -25,7 +25,7 @@ public class Chat {
         DatagramSocket server = new DatagramSocket(12345);
         Condivisa c = new Condivisa();
         int i = 0;
-        ThreadAscolta tA = new ThreadAscolta(server, i);
+        ThreadAscolta tA = new ThreadAscolta(server, i, c);
         
         tA.start();
         

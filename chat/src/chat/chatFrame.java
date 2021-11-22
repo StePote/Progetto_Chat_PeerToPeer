@@ -6,6 +6,10 @@
 package chat;
 
 import java.awt.Component;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,6 +38,11 @@ public class chatFrame extends javax.swing.JFrame {
         Invia = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         textScrivi = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        textUtente = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        btnRichiesta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -43,25 +52,68 @@ public class chatFrame extends javax.swing.JFrame {
         textScrivi.setRows(5);
         jScrollPane1.setViewportView(textScrivi);
 
+        textUtente.setColumns(20);
+        textUtente.setRows(5);
+        jScrollPane2.setViewportView(textUtente);
+
+        jLabel1.setText("  indirizzo utente:");
+
+        jLabel2.setText(" Inserisci messaggio");
+
+        btnRichiesta.setText("Invia richiesta");
+        btnRichiesta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRichiestaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(textChat, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addComponent(Invia, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 102, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(37, 37, 37)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(41, 41, 41)
+                                        .addComponent(jLabel1))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(83, 83, 83)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(69, 69, 69)
+                                        .addComponent(Invia, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(74, 74, 74)
+                                .addComponent(btnRichiesta)))
+                        .addGap(0, 102, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(textChat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(308, 308, 308)
+                .addGap(50, 50, 50)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnRichiesta, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(77, 77, 77)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Invia, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -70,21 +122,31 @@ public class chatFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+Condivisa c;
+    private void btnRichiestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRichiestaActionPerformed
+        try {
+            c.setIndirizzo(InetAddress.getByName(textUtente.toString()));
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(chatFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        c.getMessaggioDaInviare();
+    }//GEN-LAST:event_btnRichiestaActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public String messageBox() {
-        Component parentComponent= new Component(){};
-        int answer = JOptionPane.showConfirmDialog(parentComponent,"Your message goes here", "Your title goes here",JOptionPane.YES_NO_OPTION);
-        String risposta="";
+        Component parentComponent = new Component() {
+        };
+        int answer = JOptionPane.showConfirmDialog(parentComponent, "Your message goes here", "Your title goes here", JOptionPane.YES_NO_OPTION);
+        String risposta = "";
         if (answer == JOptionPane.NO_OPTION) {
-	risposta="no";
-} else if(answer == JOptionPane.YES_OPTION) {
-  	risposta="si";
-}
+            risposta = "no";
+        } else if (answer == JOptionPane.YES_OPTION) {
+            risposta = "si";
+        }
         return risposta;
-                
+
     }
 
     public static void main(String args[]) {
@@ -121,8 +183,13 @@ public class chatFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Invia;
+    private javax.swing.JButton btnRichiesta;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollBar textChat;
     private javax.swing.JTextArea textScrivi;
+    private javax.swing.JTextArea textUtente;
     // End of variables declaration//GEN-END:variables
 }

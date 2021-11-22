@@ -25,9 +25,10 @@ public class ThreadAscolta extends Thread {
     int i;
     DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 
-    public ThreadAscolta(DatagramSocket server,int i) throws SocketException {
+    public ThreadAscolta(DatagramSocket server,int i,Condivisa c) throws SocketException {
         this.server = server;
         this.i=i;
+        this.c=c;
     }
 
     @Override
@@ -54,9 +55,11 @@ public class ThreadAscolta extends Thread {
                 server.send(responsePacket);
                 i++;
             } else {
-                
                 byte[] dataReceived = packet.getData();
                 String messaggioRicevuto = new String(dataReceived, 0, packet.getLength());
+                String[] split=messaggioRicevuto.split(";");
+                String nomeUtente=split[1];
+                System.out.println(nomeUtente);
                 c.setMessaggioInviato(messaggioRicevuto);
                 c.setIndirizzo(packet.getAddress());
                 c.setPort(packet.getPort());
