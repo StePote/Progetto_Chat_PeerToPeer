@@ -49,6 +49,11 @@ public class chatFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         Invia.setText("Invia");
+        Invia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InviaActionPerformed(evt);
+            }
+        });
 
         textScrivi.setColumns(20);
         textScrivi.setRows(5);
@@ -149,6 +154,16 @@ public class chatFrame extends javax.swing.JFrame {
             Logger.getLogger(chatFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnRichiestaActionPerformed
+
+    private void InviaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InviaActionPerformed
+        try {
+            ThreadInvia tI = new ThreadInvia(c,textScrivi.toString(), textUtente.toString(),2);
+            tI.start();
+            tI.join();
+        } catch (InterruptedException | UnknownHostException ex) {
+            Logger.getLogger(chatFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_InviaActionPerformed
 
     /**
      * @param args the command line arguments

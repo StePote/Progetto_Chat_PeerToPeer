@@ -53,6 +53,27 @@ public class ThreadInvia extends Thread {
         } catch (SocketException ex) {
             Logger.getLogger(ThreadInvia.class.getName()).log(Level.SEVERE, null, ex);
         }
+        }else if(info==2){
+            DatagramSocket server;
+        try {
+            String messaggioDaInviare="m;"+contenuto;
+            server = new DatagramSocket(12345);
+            byte[] responseBuffer = messaggioDaInviare.getBytes();
+
+            DatagramPacket responsePacket = new DatagramPacket(responseBuffer, responseBuffer.length);
+
+            responsePacket.setAddress(indirizzo);
+
+            responsePacket.setPort(666);
+
+            try {
+                server.send(responsePacket);
+            } catch (IOException ex) {
+                Logger.getLogger(ThreadInvia.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (SocketException ex) {
+            Logger.getLogger(ThreadInvia.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
         
 
