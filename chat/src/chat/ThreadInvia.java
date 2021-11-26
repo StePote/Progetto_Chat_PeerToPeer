@@ -22,60 +22,47 @@ public class ThreadInvia extends Thread {
 
     InetAddress indirizzo;
     String contenuto = "";
-    int info=0;
-    public ThreadInvia(Condivisa c, String contenuto, String indirizzo,int info) throws UnknownHostException {
+    int info = 0;
+    DatagramSocket server;
 
+    public ThreadInvia(Condivisa c, String contenuto, String indirizzo, int info) throws UnknownHostException, SocketException {
         this.contenuto = contenuto;
         this.indirizzo = InetAddress.getByName(indirizzo);
-        this.info=info;
+        this.info = info;
+        server = new DatagramSocket();
     }
 
     @Override
     public void run() {
-        if(info==1){
-            DatagramSocket server;
-        try {
-            String messaggioDaInviare="a;Potenza";
-            server = new DatagramSocket(12345);
+        if (info == 1) {
+            try {
+                String messaggioDaInviare = "a;Potenza";
+                byte[] responseBuffer = messaggioDaInviare.getBytes();
+
+                DatagramPacket responsePacket = new DatagramPacket(responseBuffer, responseBuffer.length);
+
+                responsePacket.setAddress(indirizzo);
+
+                responsePacket.setPort(12345);
+
+                server.send(responsePacket);
+            } catch (SocketException ex) {
+                Logger.getLogger(ThreadInvia.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ThreadInvia.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (info == 2) {
+            String messaggioDaInviare = "m;" + contenuto;
             byte[] responseBuffer = messaggioDaInviare.getBytes();
-
             DatagramPacket responsePacket = new DatagramPacket(responseBuffer, responseBuffer.length);
-
             responsePacket.setAddress(indirizzo);
-
             responsePacket.setPort(666);
-
             try {
                 server.send(responsePacket);
             } catch (IOException ex) {
                 Logger.getLogger(ThreadInvia.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SocketException ex) {
-            Logger.getLogger(ThreadInvia.class.getName()).log(Level.SEVERE, null, ex);
         }
-        }else if(info==2){
-            DatagramSocket server;
-        try {
-            String messaggioDaInviare="m;"+contenuto;
-            server = new DatagramSocket(12345);
-            byte[] responseBuffer = messaggioDaInviare.getBytes();
-
-            DatagramPacket responsePacket = new DatagramPacket(responseBuffer, responseBuffer.length);
-
-            responsePacket.setAddress(indirizzo);
-
-            responsePacket.setPort(666);
-
-            try {
-                server.send(responsePacket);
-            } catch (IOException ex) {
-                Logger.getLogger(ThreadInvia.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (SocketException ex) {
-            Logger.getLogger(ThreadInvia.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        }
-        
 
     }
 

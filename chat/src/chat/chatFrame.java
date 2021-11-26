@@ -6,7 +6,9 @@
 package chat;
 
 import java.awt.Component;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,8 +23,17 @@ public class chatFrame extends javax.swing.JFrame {
     /**
      * Creates new form chatFrame
      */
-    public chatFrame() {
+    ThreadAscolta tA;
+
+    public chatFrame() throws SocketException {
         initComponents();
+        DatagramSocket server = new DatagramSocket(12345);
+        Condivisa c = new Condivisa();
+        int i = 0;
+        tA = new ThreadAscolta(server, i, c);
+        tA.setCh(this);
+        tA.start();
+        
     }
 
     /**
@@ -141,26 +152,42 @@ public class chatFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     Condivisa c;
+
     public chatFrame(Condivisa c) {
         this.c = c;
+    }
+
+    public String MessageBox(String nomeDestinatario) {
+        int result = JOptionPane.showConfirmDialog(null, "Vuoi connetterti con " + nomeDestinatario + "?", "Warning", JOptionPane.YES_NO_OPTION);
+        String messaggioDiRisposta = "";
+        if (result == JOptionPane.YES_OPTION) {
+            messaggioDiRisposta = "y;PotenzaStefano";
+        } else if (result == JOptionPane.NO_OPTION) {
+            messaggioDiRisposta = "n;";
+        }
+        return messaggioDiRisposta;
     }
     private void btnRichiestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRichiestaActionPerformed
 
         try {
-            ThreadInvia tI = new ThreadInvia(c,textScrivi.toString(), textUtente.toString(),1);
+            ThreadInvia tI = new ThreadInvia(c, textScrivi.getText(), textUtente.getText(), 1);
             tI.start();
             tI.join();
         } catch (InterruptedException | UnknownHostException ex) {
+            Logger.getLogger(chatFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SocketException ex) {
             Logger.getLogger(chatFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnRichiestaActionPerformed
 
     private void InviaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InviaActionPerformed
         try {
-            ThreadInvia tI = new ThreadInvia(c,textScrivi.toString(), textUtente.toString(),2);
+            ThreadInvia tI = new ThreadInvia(c, textScrivi.getText(), textUtente.getText(), 2);
             tI.start();
             tI.join();
         } catch (InterruptedException | UnknownHostException ex) {
+            Logger.getLogger(chatFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SocketException ex) {
             Logger.getLogger(chatFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_InviaActionPerformed
@@ -168,21 +195,7 @@ public class chatFrame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public String messageBox() {
-        Component parentComponent = new Component() {
-        };
-        int answer = JOptionPane.showConfirmDialog(parentComponent, "Your message goes here", "Your title goes here", JOptionPane.YES_NO_OPTION);
-        String risposta = "";
-        if (answer == JOptionPane.NO_OPTION) {
-            risposta = "no";
-        } else if (answer == JOptionPane.YES_OPTION) {
-            risposta = "si";
-        }
-        return risposta;
-
-    }
-
-    public static void main(String args[]) {
+    public static void main(String args[]) throws SocketException, InterruptedException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -209,9 +222,14 @@ public class chatFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new chatFrame().setVisible(true);
+                try {
+                    new chatFrame().setVisible(true);
+                } catch (SocketException ex) {
+                    Logger.getLogger(chatFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
