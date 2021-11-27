@@ -33,7 +33,6 @@ public class chatFrame extends javax.swing.JFrame {
         tA = new ThreadAscolta(server, i, c);
         tA.setCh(this);
         tA.start();
-        
     }
 
     /**
@@ -161,7 +160,9 @@ public class chatFrame extends javax.swing.JFrame {
         int result = JOptionPane.showConfirmDialog(null, "Vuoi connetterti con " + nomeDestinatario + "?", "Warning", JOptionPane.YES_NO_OPTION);
         String messaggioDiRisposta = "";
         if (result == JOptionPane.YES_OPTION) {
-            messaggioDiRisposta = "y;PotenzaStefano";
+            
+            
+            messaggioDiRisposta = "y;";
         } else if (result == JOptionPane.NO_OPTION) {
             messaggioDiRisposta = "n;";
         }
@@ -172,8 +173,7 @@ public class chatFrame extends javax.swing.JFrame {
         try {
             ThreadInvia tI = new ThreadInvia(c, textScrivi.getText(), textUtente.getText(), 1);
             tI.start();
-            tI.join();
-        } catch (InterruptedException | UnknownHostException ex) {
+        } catch (UnknownHostException ex) {
             Logger.getLogger(chatFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SocketException ex) {
             Logger.getLogger(chatFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -184,8 +184,7 @@ public class chatFrame extends javax.swing.JFrame {
         try {
             ThreadInvia tI = new ThreadInvia(c, textScrivi.getText(), textUtente.getText(), 2);
             tI.start();
-            tI.join();
-        } catch (InterruptedException | UnknownHostException ex) {
+        } catch (UnknownHostException ex) {
             Logger.getLogger(chatFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SocketException ex) {
             Logger.getLogger(chatFrame.class.getName()).log(Level.SEVERE, null, ex);

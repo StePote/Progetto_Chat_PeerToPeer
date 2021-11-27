@@ -61,12 +61,15 @@ public class ThreadAscolta extends Thread {
                 } else {
                     byte[] dataReceived = packet.getData();
                     String messaggioRicevuto = new String(dataReceived, 0, packet.getLength());
-                    String[] split = messaggioRicevuto.split(";");
-                    String nomeUtente = split[1];
-                    System.out.println(nomeUtente);
-                    c.setMessaggioInviato(messaggioRicevuto);
-                    c.setIndirizzoMittente(packet.getAddress());
-                    c.setPort(packet.getPort());
+                    if ("y;".equals(messaggioRicevuto)) {
+                        System.out.println(messaggioRicevuto);
+                    } else {
+                        String[] split = messaggioRicevuto.split(";");
+                        System.out.println("Ti scrive: " + split[1]);
+                    }
+//                    c.setMessaggioInviato(messaggioRicevuto);
+//                    c.setIndirizzoMittente(packet.getAddress());
+//                    c.setPort(packet.getPort());
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ThreadAscolta.class.getName()).log(Level.SEVERE, null, ex);

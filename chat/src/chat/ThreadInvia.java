@@ -56,7 +56,7 @@ public class ThreadInvia extends Thread {
             byte[] responseBuffer = messaggioDaInviare.getBytes();
             DatagramPacket responsePacket = new DatagramPacket(responseBuffer, responseBuffer.length);
             responsePacket.setAddress(indirizzo);
-            responsePacket.setPort(666);
+            responsePacket.setPort(12345);
             try {
                 server.send(responsePacket);
             } catch (IOException ex) {
